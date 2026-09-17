@@ -1,0 +1,17 @@
+# CODEOWNERS
+# Syntax: <path-pattern>  <owner> [<owner>...]
+# Owners are notified and auto-requested for review on PRs touching matching paths.
+# Later matches win: the LAST matching line for a file decides its owners.
+
+# --- Default owner for everything (fallback) ---
+*                       @whiskey-tango-foxtrot-turretlabs/engineers
+
+# --- Engineers: application / source code ---
+/src/                   @whiskey-tango-foxtrot-turretlabs/engineers
+*.py                    @whiskey-tango-foxtrot-turretlabs/engineers
+
+# --- Maintainers: infrastructure & CI/CD ---
+/.github/               @whiskey-tango-foxtrot-turretlabs/maintainers
+/infra/                 @whiskey-tango-foxtrot-turretlabs/maintainers
+/terraform/             @whiskey-tango-foxtrot-turretlabs/maintainers
+Dockerfile              @whiskey-tango-foxtrot-turretlabs/maintainers
