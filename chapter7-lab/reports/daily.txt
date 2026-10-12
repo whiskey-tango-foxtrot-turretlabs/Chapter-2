@@ -1,0 +1,4 @@
+Daily stock report
+pallet-jack   4
+rfid-reader   12
+label-printer 3

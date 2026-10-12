@@ -1,0 +1,23 @@
+# Chapter 7 Lab 4: dependency review on every PR into main.
+# Fails the check when a PR introduces a dependency with a known advisory of
+# moderate severity or higher, and posts a summary comment on the PR.
+name: ch7-dependency-review
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write # needed only for the summary comment
+
+jobs:
+  dependency-review:
+    name: dependency-review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
+          comment-summary-in-pr: always
