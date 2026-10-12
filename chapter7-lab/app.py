@@ -4,6 +4,7 @@ WARNING: this file is DELIBERATELY VULNERABLE. It exists so CodeQL has real
 findings to report in Lab 2. Never copy the LAB-VULN patterns into real code.
 """
 import os
+import re
 import sqlite3
 import subprocess
 from contextlib import closing
@@ -59,9 +60,10 @@ def reports():
 @app.get("/ping")
 def ping():
     host = request.args.get("host", "127.0.0.1")
-    # LAB-VULN-3 (command injection): user input reaches a shell.
+    if not re.fullmatch(r"[A-Za-z0-9\.\-:]+", host):
+        return jsonify(error="invalid host"), 400
     result = subprocess.run(
-        f"ping -c 1 {host}", shell=True, capture_output=True, text=True
+        ["ping", "-c", "1", host], capture_output=True, text=True
     )
     return jsonify(host=host, returncode=result.returncode)
 
