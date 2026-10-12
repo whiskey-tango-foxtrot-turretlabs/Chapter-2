@@ -27,6 +27,7 @@ def main() -> None:
 
     key_id = "AKIA" + "".join(secrets.choice(ID_ALPHABET) for _ in range(16))
     secret = "".join(secrets.choice(SECRET_ALPHABET) for _ in range(40))
+    masked_secret = f"{secret[:4]}{'*' * (len(secret) - 8)}{secret[-4:]}"
 
     path = pathlib.Path(args.out)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -34,12 +35,12 @@ def main() -> None:
         "# Copied from a laptop 'just to get the sync script working'\n"
         "[default]\n"
         f"aws_access_key_id = {key_id}\n"
-        f"aws_secret_access_key = {secret}\n"
+        f"aws_secret_access_key = {masked_secret}\n"
         "region = eu-north-1\n",
         encoding="utf-8",
         newline="\n",
     )
-    print(f"Wrote fake credential pair to {path}")
+    print(f"Wrote fake credential pair to {path} (secret redacted at rest)")
 
 
 if __name__ == "__main__":
