@@ -1,0 +1,26 @@
+# Chapter 7 Lab 3: Dependabot version updates.
+# Copy to .github/dependabot.yml. Dependabot runs once as soon as this file
+# lands on the default branch, then on the schedule below.
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/chapter7-lab"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+    groups:
+      # One PR for all Python packages, so flask and werkzeug move together.
+      python-packages:
+        patterns: ["*"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"
+    groups:
+      github-actions:
+        patterns: ["*"]
