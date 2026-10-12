@@ -1,0 +1,35 @@
+# Chapter 7 lab CI. The job name "lab-tests" is the status check you make
+# required in Lab 3. No `paths:` filter on purpose: a required check that never
+# runs leaves PRs waiting forever.
+name: ch7-ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lab-tests:
+    name: lab-tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: chapter7-lab
+    steps:
+      # Older majors on purpose: Dependabot's github-actions updater will
+      # propose bumps in Lab 3.
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: chapter7-lab/requirements.txt
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run tests
+        run: python -m pytest -q
